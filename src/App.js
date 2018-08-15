@@ -4,6 +4,7 @@ import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import './App.css';
 
 const BASE_URL = "http://192.168.43.25:3000";
+const INTERVAL = 20;
 
 class App extends Component {
   constructor(props) {
@@ -38,10 +39,10 @@ class App extends Component {
       console.log(response.data);
       const delay = response.data.delay;
       console.log(delay);
-      return axios.post(`${BASE_URL}/api/delay`, {delay: delay+10})
+      return axios.post(`${BASE_URL}/api/delay`, {delay: delay+INTERVAL})
     })
     .then((resp) => {
-      console.log("Delay increased by 10");
+      console.log(`Delay increased by ${INTERVAL}`);
     })
   }
 
@@ -52,10 +53,10 @@ class App extends Component {
       console.log(response.data);
       const delay = response.data.delay;
       console.log(delay);
-      return axios.post(`${BASE_URL}/api/delay`, {delay: delay-10})
+      return axios.post(`${BASE_URL}/api/delay`, {delay: delay-INTERVAL})
     })
     .then((resp) => {
-      console.log("Delay decreased by 10");
+      console.log(`Delay decreased by ${INTERVAL}`);
     })
   }
 
