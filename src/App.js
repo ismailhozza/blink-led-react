@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
 import './App.css';
 
+const BASE_URL = "http://192.168.43.25:3000";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,7 @@ class App extends Component {
       newState = (this.state.state === "on") ? "off" : "on";
     }
     newStyle = (newState === "on") ? "danger": "success";
-    axios.post('http://192.168.43.25:3000/api/blink', {state: newState})
+    axios.post(`${BASE_URL}/api/blink`, {state: newState})
     .then((res) => {
       this.setState({state: newState, style: newStyle});
 
@@ -31,12 +33,12 @@ class App extends Component {
 
 
   handleUp = () => {
-    axios.get('http://192.168.43.25:3000/api/delay')
+    axios.get(`${BASE_URL}/api/delay`)
     .then((response) => {
       console.log(response.data);
       const delay = response.data.delay;
       console.log(delay);
-      return axios.post('http://192.168.43.25:3000/api/delay', {delay: delay+10})
+      return axios.post(`${BASE_URL}/api/delay`, {delay: delay+10})
     })
     .then((resp) => {
       console.log("Delay increased by 10");
@@ -45,12 +47,12 @@ class App extends Component {
 
 
   handleDown = () => {
-    axios.get('http://192.168.43.25:3000/api/delay')
+    axios.get(`${BASE_URL}/api/delay`)
     .then((response) => {
       console.log(response.data);
       const delay = response.data.delay;
       console.log(delay);
-      return axios.post('http://192.168.43.25:3000/api/delay', {delay: delay-10})
+      return axios.post(`${BASE_URL}/api/delay`, {delay: delay-10})
     })
     .then((resp) => {
       console.log("Delay decreased by 10");
