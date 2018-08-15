@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Button, ButtonGroup, Glyphicon } from 'react-bootstrap';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -30,6 +29,34 @@ class App extends Component {
     })
   }
 
+
+  handleUp = () => {
+    axios.get('http://192.168.43.25:3000/api/delay')
+    .then((response) => {
+      console.log(response.data);
+      const delay = response.data.delay;
+      console.log(delay);
+      return axios.post('http://192.168.43.25:3000/api/delay', {delay: delay+10})
+    })
+    .then((resp) => {
+      console.log("Delay increased by 10");
+    })
+  }
+
+
+  handleDown = () => {
+    axios.get('http://192.168.43.25:3000/api/delay')
+    .then((response) => {
+      console.log(response.data);
+      const delay = response.data.delay;
+      console.log(delay);
+      return axios.post('http://192.168.43.25:3000/api/delay', {delay: delay-10})
+    })
+    .then((resp) => {
+      console.log("Delay decreased by 10");
+    })
+  }
+
   render() {
     const text = this.state.state === "on" ? "Stop led" : "Blink led";
     return (
@@ -45,9 +72,14 @@ class App extends Component {
               {text}
           </Button>
           <br />
+          <br />
           <ButtonGroup>
-            <Button><Glyphicon glyph="glyphicon glyphicon-upload" /></Button>
-            <Button><Glyphicon glyph="glyphicon glyphicon-download" /></Button>
+            <Button onClick={this.handleUp}>
+              <Glyphicon glyph="glyphicon glyphicon-upload" />
+            </Button>
+            <Button onClick={this.handleDown}>
+              <Glyphicon glyph="glyphicon glyphicon-download" />
+            </Button>
           </ButtonGroup>
         </div>
       </div>
